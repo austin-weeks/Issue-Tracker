@@ -1,7 +1,8 @@
 {
-	"name": "fcc-issue-tracker",
+	"name": "issue-tracker",
 	"version": "1.0.0",
-	"description": "Issue Tracker Boilerplate",
+	"description": "Issue Tracker for freeCodeCamp Quality Assurance Course",
+	"author": "Austin Weeks",
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js",
