@@ -7,10 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/public/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1>
+      <h1 style="text-align: center;">
         Issue Tracker
       </h1>
     </header>
@@ -44,27 +49,27 @@
       <h2 style="text-align: left">API Tests</h2>
       <h3>Submit issue on <i>apitest</i></h3>
       <form id="testForm" class="border">
-        <input type="text" name="issue_title" placeholder="*Title" style="width: 100px" required=''><br>
-        <textarea type="text" name="issue_text" placeholder="*Text" style="width: 100px" required=''></textarea><br>
-        <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
+        <input type="text" name="issue_title" placeholder="*Title" required=''><br>
+        <textarea type="text" name="issue_text" placeholder="*Text" required=''></textarea><br>
+        <input type="text" name="created_by" placeholder="*Created by" required=''><br>
+        <input type="text" name="assigned_to" placeholder="(opt)Assigned to"><br>
+        <input type="text" name="status_text" placeholder="(opt)Status text"><br>
         <button type="submit">Submit Issue</button>
       </form><br>
       <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
       <form id="testForm2" class="border">
-        <input type="text" name="_id" placeholder="*_id" style="width: 100px" required=''><br>
-        <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 100px"><br>
-        <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 100px"></textarea><br>
-        <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px"><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <label><input type="checkbox" name="open" value="false"> Check to close issue</label><br>
+        <input type="text" name="_id" placeholder="*_id" required=''><br>
+        <input type="text" name="issue_title" placeholder="(opt)Title"><br>
+        <textarea type="text" name="issue_text" placeholder="(opt)Text"></textarea><br>
+        <input type="text" name="created_by" placeholder="(opt)Created by"><br>
+        <input type="text" name="assigned_to" placeholder="(opt)Assigned to"><br>
+        <input type="text" name="status_text" placeholder="(opt)Status text"><br>
+        <label><input type="checkbox" class="not-wide" name="open" value="false"> Check to close issue</label><br>
         <button type="submit">Submit Issue</button>
       </form><br>
       <h3>Delete issue on <i>apitest</i></h3>
       <form id="testForm3" class="border">
-        <input type="text" name="_id" placeholder="_id" style="width: 100px" required=''><br>
+        <input type="text" name="_id" placeholder="_id" required=''><br>
         <button type="submit">Delete Issue</button>
       </form>
       <code id='jsonResult'></code>
