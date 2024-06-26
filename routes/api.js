@@ -42,6 +42,7 @@ module.exports = function (app) {
       let projectDB = await getOrCreateProject(project);
       const queries = req.query;
       const filteredIssues = projectDB.issues.filter(el => {
+        if (queries.hasOwnProperty('_id') && el._id.toString() !== queries._id) return false;
         if (queries.hasOwnProperty('issue_title') && el.issue_title !== queries.issue_title) return false;
         if (queries.hasOwnProperty('issue_text') && el.issue_text !== queries.issue_text) return false;
         if (queries.hasOwnProperty('created_on') && el.created_on !== queries.created_on) return false;
@@ -63,7 +64,9 @@ module.exports = function (app) {
       }
       const { issue_title, issue_text, created_by, assigned_to, status_text } = req.body;
       if (!issue_title || !issue_text || !created_by) {
-        res.send('issue title, text, and created_by fields are required.');
+        res.json({
+          error: 'required field(s) missing'
+        });
         return;
       }
       let projectDB = await getOrCreateProject(project);
@@ -90,14 +93,27 @@ module.exports = function (app) {
         return;
       }
       const { _id, issue_title, issue_text, created_by, assigned_to, status_text, open } = req.body;
+      const hasQueries = Object.keys(req.body).length > 1;
       if (!_id) {
-        res.send('_id field is required.');
+        res.json({
+          error: 'missing _id'
+        });
+        return;
+      }
+      if (!hasQueries) {
+        res.json({
+          error: 'no update field(s) sent',
+          _id
+        });
         return;
       }
       let projectDB = await getOrCreateProject(project);
       const issue = projectDB.issues.find(el => el._id.toString() === _id);
       if (!issue) {
-        res.send(`The issue _id provided does not match an existing project issue.`);
+        res.json({
+          error: 'could not update',
+          _id
+        });
         return;
       }
       const issueIndex = projectDB.issues.indexOf(issue);
@@ -114,7 +130,10 @@ module.exports = function (app) {
       }
       projectDB.issues[issueIndex] = updatedIssue;
       await projectDB.save();
-      res.json(updatedIssue);
+      res.json({
+        result: 'successfully updated',
+        _id
+      });
     })
     
     .delete(async (req, res) => {
@@ -125,13 +144,18 @@ module.exports = function (app) {
       }
       const _id = req.body._id;
       if (!_id) {
-        res.send('Please provide an issue _id');
+        res.json({
+          error: 'missing _id'
+        });
         return;
       }
       let projectDB = await getOrCreateProject(project);
       const issue = projectDB.issues.find(el => el._id.toString() === _id);
       if (!issue) {
-        res.send('The issue _id does not match an exist project issue.');
+        res.json({
+          error: 'could not delete',
+          _id
+        });
         return;
       }
       const filteredIssues = projectDB.issues.filter(el => el._id.toString() !== _id);
@@ -140,7 +164,7 @@ module.exports = function (app) {
       res.json({
         result: 'successfully deleted',
         _id
-      })
+      });
     });
     
 };

@@ -68,7 +68,7 @@ suite('Functional Tests', function() {
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.equal(res.text, 'issue title, text, and created_by fields are required.');
+        assert.equal(res.body.error, 'required field(s) missing');
         done();
       });
   });
@@ -114,8 +114,8 @@ suite('Functional Tests', function() {
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
+        assert.equal(res.body.result, 'successfully updated');
         assert.equal(res.body._id, testIds[0]);
-        assert.equal(res.body.issue_text, 'this issue has been updated!');
         done();
       });
   });
@@ -130,9 +130,8 @@ suite('Functional Tests', function() {
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
+        assert.equal(res.body.result, 'successfully updated');
         assert.equal(res.body._id, testIds[0]);
-        assert.equal(res.body.issue_title, 'updated issue');
-        assert.equal(res.body.issue_text, 'this issue has been updated again!');
         done();
       });
   });
@@ -145,7 +144,7 @@ suite('Functional Tests', function() {
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.equal(res.text, '_id field is required.');
+        assert.equal(res.body.error, 'missing _id');
         done();
       });
   });
@@ -156,7 +155,7 @@ suite('Functional Tests', function() {
       .send({})
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.equal(res.text, '_id field is required.');
+        assert.equal(res.body.error, 'missing _id');
         done();
       });
   });
@@ -170,7 +169,8 @@ suite('Functional Tests', function() {
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.equal(res.text, 'The issue _id provided does not match an existing project issue.');
+        assert.equal(res.body.error, 'could not update');
+        assert.equal(res.body._id, 'fdsajfie3jfjis');
         done();
       });
   });
@@ -197,7 +197,8 @@ suite('Functional Tests', function() {
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.equal(res.text, 'The issue _id does not match an exist project issue.');
+        assert.equal(res.body.error, 'could not delete');
+        assert.equal(res.body._id, 'j3u1983u4rdsjkap');
         done();
       });
   });
@@ -208,7 +209,7 @@ suite('Functional Tests', function() {
       .send({})
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.equal(res.text, 'Please provide an issue _id');
+        assert.equal(res.body.error, 'missing _id');
         done();
       });
   });
